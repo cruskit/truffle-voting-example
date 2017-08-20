@@ -29,7 +29,7 @@ contract('Ballot', function(accounts) {
         }).then(function() {
             return ballot.winningProposal.call();
         }).then(function(winner) {
-            assert.equal(winner.valueOf(), 1, "1 was the winner");
+            assert.equal(winner.valueOf(), 1, "proposal 1 was the winner");
         });
     });
 
@@ -45,12 +45,11 @@ contract('Ballot', function(accounts) {
             return ballot.giveRightToVote.call(account_two, {from: account_zero} );
         }).then(function() {
             return ballot.vote.call(1, {from: account_two});
-//        }).then(function() {
-  //          return ballot.vote.call(2, {from: account_two});
         }).then(function() {
-            return ballot.winningProposal.call();
-        }).then(function(winner) {
-            assert.equal(winner.valueOf(), 1, "1 was the winner");
+            // This should throw an exception as can only call once
+            return ballot.vote.call(2, {from: account_two});
+        }).then(function() {
+            assert.isOk(false, "Should have thrown exception on second vote");
         });
     });
 
