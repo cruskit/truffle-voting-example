@@ -77,13 +77,13 @@ contract Ballot {
     /// @dev Computes the winning proposal taking all
     /// previous votes into account.
     function winningProposal() constant
-    returns (uint winningProposal)
+    returns (uint winningProposalId)
     {
         uint winningVoteCount = 0;
         for (uint p = 0; p < proposals.length; p++) {
             if (proposals[p].voteCount > winningVoteCount) {
                 winningVoteCount = proposals[p].voteCount;
-                winningProposal = p;
+                winningProposalId = p;
             }
         }
     }
@@ -92,8 +92,8 @@ contract Ballot {
     // of the winner contained in the proposals array and then
     // returns the name of the winner
     function winnerName() constant
-    returns (bytes32 winnerName)
+    returns (bytes32 winnerNameStr)
     {
-        winnerName = proposals[winningProposal()].name;
+        winnerNameStr = proposals[winningProposal()].name;
     }
 }
