@@ -20,7 +20,6 @@ contract('Ballot', function(accounts) {
             //console.log("ballot: " + ballot);
             // for(var propName in ballot) {
             //     propValue = ballot[propName]
-            //
             //     console.log(propName,propValue);
             // }
             return ballot.giveRightToVote(account_two, {from: account_zero} );
@@ -64,6 +63,14 @@ contract('Ballot', function(accounts) {
             return ballot.vote(2, {from: account_two});
         }).then(function() {
             assert.isOk(false, "Should have thrown exception on second vote");
+        }).catch (function(error) {
+            if(error.toString().indexOf("invalid opcode") != -1) {
+                //This is the expected path if everything is ok
+                //console.log("We were expecting a Solidity throw on second vote, we got one. Test succeeded.");
+            } else {
+                // if the error is something else (e.g., the assert from previous promise), then we fail the test
+                assert.isOk(false, "Unexpected error: " + error.toString());
+            }
         });
     });
 
