@@ -12,8 +12,8 @@ contract('Ballot', function(accounts) {
 
         var ballot;
         var proposals = ["first", "second"];
-        var account_zero = "0x90f8bf6a479f320ead074411a4b0e7944ea8c9c1";
-        var account_two = "0x22d491bde2303f2f43325b2108d26f1eaba1e32b";
+        var account_zero = accounts[0];
+        var account_two = accounts[2];
 
         return Ballot.new(proposals).then(function(instance) {
             ballot = instance;
@@ -37,8 +37,8 @@ contract('Ballot', function(accounts) {
 
         var ballot;
         var proposals = ["first", "second"];
-        var account_zero = "0x90f8bf6a479f320ead074411a4b0e7944ea8c9c1";
-        var account_two = "0x22d491bde2303f2f43325b2108d26f1eaba1e32b";
+        var account_zero = accounts[0];
+        var account_two = accounts[2];
 
         return Ballot.new(proposals).then(function(instance) {
             ballot = instance;
