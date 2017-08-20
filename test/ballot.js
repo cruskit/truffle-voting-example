@@ -17,7 +17,7 @@ contract('Ballot', function(accounts) {
 
         return Ballot.new(proposals).then(function(instance) {
             ballot = instance;
-            console.log("ballot: " + ballot);
+            //console.log("ballot: " + ballot);
             // for(var propName in ballot) {
             //     propValue = ballot[propName]
             //
