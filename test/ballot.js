@@ -18,11 +18,11 @@ contract('Ballot', function(accounts) {
         return Ballot.new(proposals).then(function(instance) {
             ballot = instance;
             console.log("ballot: " + ballot);
-            for(var propName in ballot) {
-                propValue = ballot[propName]
-
-                console.log(propName,propValue);
-            }
+            // for(var propName in ballot) {
+            //     propValue = ballot[propName]
+            //
+            //     console.log(propName,propValue);
+            // }
             return ballot.giveRightToVote(account_two, {from: account_zero} );
         }).then(function() {
             return ballot.vote(1, {from: account_two});
@@ -30,6 +30,20 @@ contract('Ballot', function(accounts) {
             return ballot.winningProposal.call();
         }).then(function(winner) {
             assert.equal(winner.valueOf(), 1, "proposal 1 was the winner");
+        }).then(function() {
+            return ballot.winnerName.call();
+        }).then(function(winnerNameStr) {
+
+          // Convert the hex string of bytes to ascii
+          // TODO: there must be a nicer way to do this...
+          var nameStr = winnerNameStr.match(/.{1,2}/g).map(function(v){
+              return String.fromCharCode(parseInt(v, 16));
+          }).join('');
+
+          // Trim all the nul characters from the conversion
+          nameStr = nameStr.replace(new RegExp("\u0000", 'g'), ""); // removes NUL chars
+
+          assert.equal(nameStr, "second", "proposal 'second' was the winner");
         });
     });
 
