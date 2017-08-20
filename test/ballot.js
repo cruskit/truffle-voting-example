@@ -23,9 +23,9 @@ contract('Ballot', function(accounts) {
 
                 console.log(propName,propValue);
             }
-            return ballot.giveRightToVote.call(account_two, {from: account_zero} );
+            return ballot.giveRightToVote(account_two, {from: account_zero} );
         }).then(function() {
-            return ballot.vote.call(1, {from: account_two});
+            return ballot.vote(1, {from: account_two});
         }).then(function() {
             return ballot.winningProposal.call();
         }).then(function(winner) {
@@ -42,12 +42,12 @@ contract('Ballot', function(accounts) {
 
         return Ballot.new(proposals).then(function(instance) {
             ballot = instance;
-            return ballot.giveRightToVote.call(account_two, {from: account_zero} );
+            return ballot.giveRightToVote(account_two, {from: account_zero} );
         }).then(function() {
-            return ballot.vote.call(1, {from: account_two});
+            return ballot.vote(1, {from: account_two});
         }).then(function() {
             // This should throw an exception as can only call once
-            return ballot.vote.call(2, {from: account_two});
+            return ballot.vote(2, {from: account_two});
         }).then(function() {
             assert.isOk(false, "Should have thrown exception on second vote");
         });
